@@ -1,0 +1,11 @@
+# Ambiente virtual do Python
+.venv/
+
+# Arquivos de cache do Python
+__pycache__/
+
+# Arquivo de histórico de preços (para que cada um tenha o seu)
+historico_precos.csv
+
+# Arquivo de debug que criamos
+debug_page.html
