@@ -8,7 +8,7 @@ import os
 URL = "https://www.amazon.com.br/Notebook-ANV15-51-7837-Gera%C3%A7%C3%A3o-Nvidia-iluminado/dp/B0DKQ2SSKY/ref=asc_df_B0DKQ2SSKY?mcid=8a8b7c3465bc3933a8da119aaa1fd039&tag=googleshopp00-20&linkCode=df0&hvadid=709884378364&hvpos=&hvnetw=g&hvrand=1003484426730611769&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9102174&hvtargid=pla-2419062133083&psc=1&language=pt_BR&gad_source=4"
 HISTORICO = 'historico_precos.csv'
 
-def pegar_preco():
+def pegar_preco_amazon(url):
     with sync_playwright() as p:
         # Lança o navegador (modo headless não abre janela visual)
         browser = p.chromium.launch(headless=True)
@@ -22,7 +22,7 @@ def pegar_preco():
         page = context.new_page()
         
         # Navega até a URL e espera o conteúdo carregar
-        page.goto(URL, wait_until='domcontentloaded', timeout=60000)
+        page.goto(url, wait_until='domcontentloaded', timeout=60000)
 
         # Pega o conteúdo HTML final da página
         pagina_html = page.content()
@@ -78,7 +78,7 @@ def salvar_historico(preco_atual):
 if __name__ == "__main__":
     # Define como os números float devem ser exibidos pelo Pandas
     pd.options.display.float_format = '{:.2f}'.format
-    preco = pegar_preco()
+    preco = pegar_preco_amazon()
     
     if preco:
         print(f"Preço atual: R$ {preco:.2f}")
