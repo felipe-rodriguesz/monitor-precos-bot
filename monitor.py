@@ -78,7 +78,7 @@ def salvar_historico(preco_atual):
 if __name__ == "__main__":
     # Define como os números float devem ser exibidos pelo Pandas
     pd.options.display.float_format = '{:.2f}'.format
-    preco = pegar_preco_amazon()
+    preco = pegar_preco_amazon(URL)
     
     if preco:
         print(f"Preço atual: R$ {preco:.2f}")
