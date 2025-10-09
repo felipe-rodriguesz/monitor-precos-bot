@@ -73,7 +73,6 @@ def salvar_historico(preco_atual):
 
     # Salva o DataFrame atualizado no arquivo CSV, sem o índice
     historico_atualizado_df.to_csv(HISTORICO, index=False)
-    print(f"Histórico de preços salvo em '{HISTORICO}'")
     
 if __name__ == "__main__":
     # Define como os números float devem ser exibidos pelo Pandas
