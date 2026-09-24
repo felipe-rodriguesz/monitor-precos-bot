@@ -62,6 +62,7 @@ def salvar_historico(preco_atual, nome_produto="Produto"):
     timestamp = datetime.now()
     novo_dado_df = pd.DataFrame([{
         'data_hora': timestamp,
+        'nome_produto': nome_produto,
         'preco_rs': preco_atual
     }])
 

@@ -1,4 +1,7 @@
 import logging
+import os
+
+from dotenv import load_dotenv
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import (
     Application,
@@ -10,6 +13,8 @@ from telegram.ext import (
 )
 
 from monitor import pegar_preco_amazon, salvar_historico
+
+load_dotenv()
 
 # Configura o logging para ver erros no terminal
 logging.basicConfig( format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level = logging.INFO)
@@ -82,7 +87,7 @@ async def receber_preco(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     preco_atual = await pegar_preco_amazon(url)
     
     if preco_atual is not None:
-        salvar_historico(preco_atual, "Produto_do_Bot")
+        salvar_historico(preco_atual, "Produto do Bot")
         
         await update.message.reply_text(
             f"✅ Verificação Concluída!\n\n"
@@ -113,10 +118,13 @@ async def cancelar(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return ConversationHandler.END
 
 def main() -> None:
-    
-    TOKEN = "COLE_SEU_TOKEN_AQUI"
-        
-    application = Application.builder().token(TOKEN).build()
+    token = os.getenv("TELEGRAM_BOT_TOKEN")
+    if not token:
+        raise RuntimeError(
+            "Token do Telegram não configurado. Defina TELEGRAM_BOT_TOKEN no ambiente ou no arquivo .env."
+        )
+
+    application = Application.builder().token(token).build()
 
     # --- Cria o Handler de Conversa ---
     conv_handler = ConversationHandler(
